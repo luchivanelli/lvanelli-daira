@@ -1,11 +1,12 @@
 <script>
     export let value
+    
 </script>
 
 {#if value == '+' || value == '='}
-    <button class="row-span-2">{value}</button>
+    <button on:click={$$props.handleDiv} class="row-span-2 text-lg">{value}</button>
 {:else if value == '0'}
-    <button class="col-span-2">{value}</button>
+    <button on:click={$$props.handleDiv} class="col-span-2 text-lg">{value}</button>
 {:else}
-    <button>{value}</button>
+    <button on:click={$$props.handleDiv}>{value}</button>
 {/if}
