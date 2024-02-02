@@ -7,21 +7,37 @@
     const handleDiv = (e)=> {
         let value = e.target.innerHTML
         if (valueDiv == '0') {  //limpiar el '0' inicial
-            valueDiv = ''
-            valueDiv = valueDiv + value
+            //validar que el primer caracter sea un numero o un '-' (para operar numero negativo)
+            if (!isNaN(parseInt(value)) || value == '-') {  
+                valueDiv = ''
+                valueDiv = valueDiv + value 
+            }
         } else {
-            valueDiv = valueDiv + value
+            valueDiv = valueDiv + value  //concatenar
         }
 
         if (value == 'C') {  //limpiar display
             valueDiv = '0'
         } else if (value == '=') {  //operar
             operation()
+        } 
+        
+        //hacer varias operaciones a la vez
+        if (isNaN(parseInt(value))) {  //evaluar si value no es un numero
+            let newDiv = valueDiv.slice(1, valueDiv.length-1) //newDiv: contiene el valor de valueDiv sin el primer y ultimo caracter
+            newDiv.includes('+') || 
+            newDiv.includes('-') || 
+            newDiv.includes('/') || 
+            newDiv.includes('*') ? operation(value, valueDiv.slice(0, valueDiv.length-1)) : null 
+            //si ya hay una operacion para hacer, se llama a la funcion.
+            //luego se agrega el operador correspondiente (value) al resultado de la operacion
         }
     }
 
-    const operation = ()=> {
+    const operation = (value, newDiv)=> {
         let newValue, resultado
+        newDiv ? valueDiv = newDiv : null  //newDiv contiene el valor del display menos el ultimo caracter
+
         if (valueDiv.includes('+')) {  //verificar el operador
             newValue = valueDiv.split('+')  //separar string, obtener numeros a operar
             newValue[1] = newValue[1].replace('=', '')  //eliminar '=' del 2do numero
@@ -46,6 +62,7 @@
     
         resultado % 1 == 0 ? valueDiv = resultado.toString() : valueDiv = resultado.toFixed(3).toString()
         //si el numero es flotante, limitar la cantidad de decimales. Pasar variable de number a string
+        value ? valueDiv = valueDiv + value : null  //agregamos operador
     }
 
 </script>
