@@ -1,8 +1,22 @@
 <script>
+    import axios from "axios";
     import Button from "./Button.svelte";
 
     const buttons = ['C', '/', '*', '-', 7, 8, 9, '+', 4, 5, 6, 1, 2, 3, '=', 0, '.']
     let valueDiv = '0'
+
+    const getData = async ()=> {
+        try {
+            const response = await axios.get("http://localhost:5173/operations")
+            console.log(response)
+        }
+        catch(err) {
+            console.log('error')
+        }
+    }
+
+    getData()
+
 
     const handleDiv = (e)=> {
         let value = e.target.innerHTML
