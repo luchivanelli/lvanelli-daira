@@ -1,6 +1,5 @@
 <script>
     export let value
-    
 </script>
 
 {#if value == '+' || value == '='}
